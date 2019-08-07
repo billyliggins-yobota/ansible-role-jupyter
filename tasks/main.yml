@@ -2,13 +2,14 @@
 - name: Install Python packages
   become: '{{ jupyter_package_manager_become }}'
   pip:
-    name: '{{ item }}'
+    name:
+      - ipython
+      - ipykernel
+      - jupyter
+    virtualenv: '{{ virtual_env }}'
+    virtualenv_python: '{{ python_3 }}'
     state: '{{ jupyter_package_state }}'
-    executable: '{{ jupyter_package_manager }}'
-  with_items:
-    - ipython
-    - ipykernel
-    - jupyter
+    # executable: '{{ jupyter_package_manager }}'
 
 - name: Check if the IPython profile already exists
   stat:
@@ -17,7 +18,7 @@
 
 - name: Create IPython profile
   when: not ipython_config_exists.stat.exists
-  command: ipython profile create
+  command: '{{ ipython }} profile create'
   register: ipython_profile_create_output
   args:
     creates:
@@ -55,7 +56,7 @@
       changed_when: no
 
 - name: Create Jupyter profile
-  command: jupyter notebook --generate-config
+  command: '{{ jupyter }} notebook --generate-config'
   args:
     creates: '{{ jupyter_config_filename }}'
 
@@ -66,17 +67,19 @@
     mode: 0644
     force: yes
 
+- name: Generater env
+  template:
+    src: env.j2
+    dest: '{{ jupyter_env_filename }}'
+    mode: 0644
+    force: yes
+
 - name: Install Jupyter as a daemon
   when: jupyter_daemon_enable
   block:
-    - name: Find Jupyter server binary
-      command: which jupyter-notebook
-      register: jupyter_server_which_output
-      changed_when: no
-
     - name: Initialize Jupyter server binary path
       set_fact:
-        jupyter_daemon_executable: '{{ jupyter_server_which_output.stdout }}'
+        jupyter_daemon_executable: '{{ jupyter_notebook }}'
       changed_when: no
 
     - name: Make sure systemd directory exists

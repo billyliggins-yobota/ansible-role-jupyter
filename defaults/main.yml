@@ -7,7 +7,7 @@ jupyter_python_executable: python
 jupyter_package_manager: pip
 
 # Whether to run the package manager with elevated privileges.
-jupyter_package_manager_become: no
+jupyter_package_manager_become: yes
 
 # Desired state for Jupyter-related Python packages.
 # You might want to use 'present' instead of 'latest'.
@@ -34,7 +34,7 @@ jupyter_open_browser: no
 # ----------------------------------
 
 # Install Jupyter as a daemon.
-jupyter_daemon_enable: no
+jupyter_daemon_enable: yes
 
 # The root directory that will be accessible in Jupyter tree.
 jupyter_daemon_document_root: '{{ ansible_env.HOME }}'

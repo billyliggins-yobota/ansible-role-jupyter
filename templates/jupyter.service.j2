@@ -4,6 +4,7 @@ Description=Jupyter Notebook
 [Service]
 Type=simple
 PIDFile={{ jupyter_daemon_pidfile }}
+EnvironmentFile={{ jupyter_env_filename }}
 ExecStart={{ jupyter_daemon_executable }} --config={{ jupyter_config_filename }}
 User={{ jupyter_daemon_user }}
 Group={{ jupyter_daemon_group }}

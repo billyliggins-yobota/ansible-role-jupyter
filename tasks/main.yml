@@ -9,7 +9,6 @@
     virtualenv: '{{ virtual_env }}'
     virtualenv_python: '{{ python_3 }}'
     state: '{{ jupyter_package_state }}'
-    # executable: '{{ jupyter_package_manager }}'
 
 - name: Check if the IPython profile already exists
   stat:

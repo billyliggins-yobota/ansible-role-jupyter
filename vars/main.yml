@@ -8,16 +8,16 @@ ipython_kernel_config_filename: '{{ ipython_profile_dir }}/ipython_kernel_config
 # Jupyter
 jupyter_config_filename: '{{ ansible_env.HOME }}/.jupyter/jupyter_notebook_config.py'
 jupyter_env_filename: '{{ ansible_env.HOME }}/.jupyter/env'
-
 virtual_env: '{{ ansible_env.HOME }}/env'
+
+jupyter_notebook: '{{ virtual_env }}/bin/jupyter-notebook'
+jupyter: '{{ virtual_env }}bin/jupyter'
+ipython: '{{ virtual_env }}bin/ipython'
+python_3: 'python3.5'
+
 
 # Jupyter daemon
 jupyter_daemon_systemd_dir: '/usr/lib/systemd/system'
 jupyter_daemon_systemd_filename: '{{ jupyter_daemon_systemd_dir }}/jupyter.service'
 jupyter_daemon_pidfile: '/run/jupyter.service.pid'
 
-
-jupyter_notebook: '{{ virtual_env }}/bin/jupyter-notebook'
-jupyter: '{{ virtual_env }}bin/jupyter'
-ipython: '{{ virtual_env }}bin/ipython'
-python_3: 'python3.5'
